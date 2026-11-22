@@ -1,0 +1,189 @@
+/* Contacto — Sabores de Chile. Reusa el sistema de home-styles.css
+   La base del hero y la placa viven en home-styles.css. */
+
+.contacto-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--xl);
+  align-items: center;
+}
+
+.contacto-titulo {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+}
+
+.contacto-titulo em {
+  color: var(--ocre-2);
+  font-style: normal;
+}
+
+.contacto-lead {
+  margin-top: var(--m);
+  color: var(--tinta-2);
+  max-width: 44ch;
+}
+
+/* 860px y no 768px: por debajo de 861 el grid de 2 columnas deja la card del
+   formulario en ~311px y los inputs en ~123px, ilegibles. Medido. */
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--xl);
+  padding-block: var(--xxl);
+  align-items: start;
+}
+
+.contacto-info {
+  display: grid;
+  gap: var(--l);
+}
+
+/* Cartel de la fonda: horario y datos como rótulo pintado */
+.info-card {
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  box-shadow: 6px 6px 0 var(--tinta);
+  padding: var(--l);
+}
+
+.info-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: var(--s);
+}
+
+.info-card p {
+  color: var(--tinta-2);
+  font-size: 0.95rem;
+}
+
+.info-lista {
+  list-style: none;
+  margin: var(--m) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s);
+}
+
+.info-lista li {
+  display: flex;
+  gap: var(--s);
+  align-items: baseline;
+  font-size: 0.95rem;
+}
+
+.info-lista strong {
+  min-width: 78px;
+  font-family: var(--display);
+  font-weight: 600;
+  color: var(--terracota-txt);
+}
+
+.horario {
+  border-top: 2px dashed var(--tinta-2);
+  margin-top: var(--m);
+  padding-top: var(--m);
+  font-style: italic;
+  color: var(--tinta-2);
+}
+
+/* Formulario: ficha de receta con líneas de regla.
+   La tarjeta es el .contacto-form-card que envuelve al <form>; el form va pelado. */
+.contacto-form-card {
+  background: var(--blanco);
+  border: 2px solid var(--tinta);
+  box-shadow: 8px 8px 0 var(--tinta);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  position: relative;
+}
+
+.campo {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: var(--m);
+}
+
+.campo label {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  font: inherit;
+  color: var(--tinta);
+  background: var(--crema);
+  border: 2px solid var(--tinta);
+  border-radius: 0;
+  padding: 0.65rem 0.8rem;
+  width: 100%;
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+  border-color: var(--terracota);
+  box-shadow: 4px 4px 0 var(--terracota);
+  background: var(--blanco);
+  outline: none;
+}
+
+.campo .error-message {
+  color: var(--terracota-2);
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-height: 1.1em;
+}
+
+.campo.invalido input,
+.campo.invalido textarea {
+  background: #fdecea;
+  border-color: var(--terracota);
+}
+
+.form-ayuda {
+  font-size: 0.85rem;
+  color: var(--tinta-2);
+}
+
+.form-message {
+  margin-top: var(--m);
+  font-weight: 500;
+}
+
+.form-message.exito {
+  color: var(--oliva-2);
+}
+
+.form-message.error {
+  color: var(--terracota-2);
+}
+
+.form-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--m);
+}
+
+@media (max-width: 860px) {
+  .contacto-hero-grid,
+  .contacto-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contacto-hero-placa {
+    max-width: 240px;
+  }
+
+  .form-fila {
+    grid-template-columns: 1fr;
+  }
+}

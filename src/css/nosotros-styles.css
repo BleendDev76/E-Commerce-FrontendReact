@@ -1,0 +1,141 @@
+/* Nosotros — Sabores de Chile. Reusa el sistema de home-styles.css
+   La base del hero y la placa viven en home-styles.css. */
+
+.nosotros-hero::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--oliva) 0 28px,
+    var(--ocre) 28px 56px,
+    var(--terracota) 56px 84px
+  );
+}
+
+.nosotros-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: var(--xl);
+  align-items: center;
+}
+
+.nosotros-hero-kicker {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--terracota-txt);
+  margin-bottom: var(--m);
+}
+
+.nosotros-hero-titulo {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+}
+
+.nosotros-hero-em {
+  color: var(--terracota);
+}
+
+.nosotros-hero-lead {
+  margin-top: var(--l);
+  max-width: 44ch;
+  color: var(--tinta-2);
+  font-size: 1.05rem;
+}
+
+/* Historia */
+.historia {
+  padding-block: var(--xxl);
+}
+
+.historia-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--xl);
+}
+
+.historia-texto p:not(.productos-kicker) {
+  margin-top: var(--m);
+  color: var(--tinta-2);
+  font-size: 1.05rem;
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+.valores-head {
+  max-width: 46ch;
+  margin-bottom: var(--xl);
+}
+
+.valores-lead {
+  margin-top: var(--s);
+  color: var(--papel);
+}
+
+/* Pilares: fichas con ilustración */
+.receta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--l);
+}
+
+/* Pilares: fichas de papel kraft sobre la pizarra, misma sombra del sistema */
+.ingrediente {
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  box-shadow: 6px 6px 0 var(--tinta);
+  padding: var(--l);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s);
+}
+
+.ingrediente svg {
+  width: 56px;
+  height: auto;
+  margin-bottom: var(--s);
+}
+
+.ingrediente-medida {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--terracota-2);
+  margin: 0;
+}
+
+.ingrediente-nombre {
+  font-size: 1.35rem;
+  color: var(--tinta);
+}
+
+.ingrediente-nota {
+  color: var(--tinta-2);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .nosotros-hero-grid,
+  .historia-grid,
+  .receta {
+    grid-template-columns: 1fr;
+  }
+
+  .receta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nosotros-hero-placa {
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 560px) {
+  .receta {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,148 @@
+/* Blogs — Sabores de Chile. Reusa el sistema de home-styles.css */
+
+/* Hero: banda de afiche con ilustración a la derecha.
+   La base del hero y la placa viven en home-styles.css. */
+.blog-hero::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--terracota) 0 28px,
+    var(--ocre) 28px 56px,
+    var(--oliva) 56px 84px
+  );
+}
+
+.blog-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: var(--xl);
+  align-items: center;
+}
+
+.blog-titulo {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+}
+
+.blog-titulo em {
+  color: var(--ocre-2);
+  font-style: normal;
+}
+
+.blog-lead {
+  margin-top: var(--m);
+  color: var(--tinta-2);
+  max-width: 46ch;
+}
+
+/* Listado */
+.blog-listado {
+  padding-block: var(--xxl);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: var(--l);
+}
+
+.post-body {
+  gap: var(--x);
+}
+
+.post-titulo {
+  font-size: 1.4rem;
+  text-wrap: pretty;
+}
+
+/* La ilustración llena más marco: al 62% heredado la tarjeta queda
+   medio vacía frente a las fotos de producto que llenan el 4:3. */
+.post-img svg {
+  width: 78%;
+}
+
+.post-extracto {
+  max-width: 48ch;
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+/* Detalle de una receta: una columna de lectura, no tarjetas.
+   El ancho se limita a 68ch y las anclas dejan aire arriba para que el
+   título no quede pegado al borde al llegar desde "Leer receta". */
+.blog-articulos {
+  display: grid;
+  gap: var(--xxl);
+  max-width: 68ch;
+}
+
+.blog-articulo {
+  display: grid;
+  gap: var(--m);
+  scroll-margin-top: var(--l);
+}
+
+.blog-articulo h2 {
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  text-wrap: balance;
+}
+
+.blog-articulo h3 {
+  font-size: 1.1rem;
+}
+
+.blog-articulo p,
+.blog-articulo li {
+  line-height: 1.8;
+}
+
+/* Receta: bloque de papel con la lista y los pasos, separado del relato. */
+.blog-receta {
+  display: grid;
+  gap: var(--s);
+  padding: var(--m);
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  box-shadow: 4px 4px 0 var(--tinta);
+}
+
+.blog-receta ul,
+.blog-receta ol {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+/* Llamada final: bloque de tinta con presencia de tarjeta */.blog-cta {
+  margin-top: var(--xxl);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m);
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid var(--tinta);
+  border-top: 3px solid var(--terracota);
+  box-shadow: 8px 8px 0 var(--tinta);
+}
+
+.blog-cta h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+@media (max-width: 768px) {
+  .blog-hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--l);
+  }
+
+  .blog-hero-placa {
+    max-width: 260px;
+  }
+}

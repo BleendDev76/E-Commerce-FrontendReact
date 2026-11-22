@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sabores de Chile | Cocina casera chilena</title>
+    <link rel="stylesheet" href="/src/css/home-styles.css" />
+    <link rel="stylesheet" href="/src/css/auth-styles.css" />
+    <link rel="stylesheet" href="/src/css/animaciones.css" />
+  </head>
+  <body>
+    <!-- <site-navbar></site-navbar> -->
+    <div id="react-navbar-root"></div>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              <span class="hero-line">Recetas que</span>
+              <span class="hero-line hero-line--tinta">cuentan historias</span>
+              <span class="hero-line hero-line--ocre">del fogón a tu mesa</span>
+            </h1>
+            <div class="hero-ornament" aria-hidden="true"></div>
+            <p class="hero-tagline">
+              Cocina casera chilena: platos de temporada, recetas heredadas y el
+              sabor de la mesa familiar.
+            </p>
+            <div class="hero-acciones">
+              <a href="/src/pages/productos.html" class="btn">Ver los platos</a>
+              <a href="/src/pages/nosotros.html" class="btn-texto"
+                >Conocer la cocina</a
+              >
+            </div>
+          </div>
+
+          <figure class="hero-placa">
+            <img
+              class="hero-foto"
+              src="/assets/img/cazuela-de-vacuno.webp"
+              alt="Cazuela de vacuno con verduras, servida en una olla de barro"
+              width="800"
+              height="600"
+              fetchpriority="high"
+            />
+            <figcaption class="hero-sello">
+              <span class="hero-sello-palabra">La</span>
+              <span class="hero-sello-palabra">cocina</span>
+              <span class="hero-sello-palabra">de</span>
+              <span class="hero-sello-palabra">hoy</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div class="marquee">
+        <input type="checkbox" class="marquee-pausa" id="marquee-pausa" />
+        <label class="marquee-boton" for="marquee-pausa">
+          <span class="marquee-al-pausar">Pausar</span>
+          <span class="marquee-al-reanudar">Reanudar</span>
+        </label>
+
+        <div class="marquee-track" aria-hidden="true">
+          <div class="marquee-segment">
+            <span class="marquee-item">Pastel de choclo</span>
+            <span class="marquee-item">Porotos granados</span>
+            <span class="marquee-item">Cazuela de vacuno</span>
+            <span class="marquee-item">Empanada de pino</span>
+            <span class="marquee-item">Charquicán</span>
+            <span class="marquee-item">Sopaipillas</span>
+          </div>
+          <div class="marquee-segment">
+            <span class="marquee-item">Pastel de choclo</span>
+            <span class="marquee-item">Porotos granados</span>
+            <span class="marquee-item">Cazuela de vacuno</span>
+            <span class="marquee-item">Empanada de pino</span>
+            <span class="marquee-item">Charquicán</span>
+            <span class="marquee-item">Sopaipillas</span>
+          </div>
+        </div>
+      </div>
+
+      <section id="productos" class="productos">
+        <div class="container">
+          <header class="productos-head revelar">
+            <div class="productos-head-titulo">
+              <p class="productos-kicker">Recién sacados del fogón</p>
+              <h2 class="productos-titulo">Platos destacados</h2>
+            </div>
+            <p class="productos-lead">
+              Lo que hoy sale de la cocina: recetas heredadas y productos de la
+              temporada.
+            </p>
+          </header>
+
+          <!-- Las tarjetas las pinta tienda.js desde Supabase. -->
+          <div class="productos-grid" data-catalogo="destacados"></div>
+        </div>
+      </section>
+
+      <!-- Banda de fotos: la carta entera en papel, pegada a la pizarra.
+           Las imagenes salen de /public/assets/img y las licencias estan en
+           los creditos del pie. -->
+      <section class="fotos-banda" aria-label="Platos de la casa">
+        <div class="fotos-banda-pista">
+          <figure class="foto">
+            <img
+              src="/assets/img/charquican.webp"
+              alt="Charquicán con zapallo, papa molida y huevo frito"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Charquicán</figcaption>
+          </figure>
+          <figure class="foto">
+            <img
+              src="/assets/img/porotos-granados.webp"
+              alt="Porotos granados con choclo y zapallo"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Porotos granados</figcaption>
+          </figure>
+          <figure class="foto">
+            <img
+              src="/assets/img/cazuela-de-vacuno.webp"
+              alt="Cazuela de vacuno con verduras"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Cazuela de vacuno</figcaption>
+          </figure>
+          <figure class="foto">
+            <img
+              src="/assets/img/empanada-de-pino.webp"
+              alt="Empanada de pino recién horneada"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Empanada de pino</figcaption>
+          </figure>
+          <figure class="foto">
+            <img
+              src="/assets/img/pastel-de-choclo-actualizado.jpeg"
+              alt="Pastel de choclo con pino de carne"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Pastel de choclo</figcaption>
+          </figure>
+          <figure class="foto">
+            <img
+              src="/assets/img/sopaipillas.webp"
+              alt="Sopaipillas recién fritas"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Sopaipillas</figcaption>
+          </figure>
+          <!-- La serie se repite para que la pista pueda correr la mitad de su
+               ancho sin dejar un hueco de papel al final del recorrido. La
+               copia va fuera del arbol de accesibilidad: el lector oye la
+               carta una vez, no dos. -->
+          <figure class="foto" aria-hidden="true">
+            <img
+              src="/assets/img/charquican.webp"
+              alt=""
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Charquicán</figcaption>
+          </figure>
+          <figure class="foto" aria-hidden="true">
+            <img
+              src="/assets/img/porotos-granados.webp"
+              alt=""
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Porotos granados</figcaption>
+          </figure>
+          <figure class="foto" aria-hidden="true">
+            <img
+              src="/assets/img/cazuela-de-vacuno.webp"
+              alt=""
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Cazuela de vacuno</figcaption>
+          </figure>
+          <figure class="foto" aria-hidden="true">
+            <img
+              src="/assets/img/empanada-de-pino.webp"
+              alt=""
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Empanada de pino</figcaption>
+          </figure>
+          <figure class="foto" aria-hidden="true">
+            <img
+              src="/assets/img/pastel-de-choclo.webp"
+              alt=""
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Pastel de choclo</figcaption>
+          </figure>
+          <figure class="foto" aria-hidden="true">
+            <img
+              src="/assets/img/sopaipillas.webp"
+              alt=""
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+            <figcaption>Sopaipillas</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- El manifiesto: la frase que se estampa al bajar. Las palabras las
+           separa animaciones.js; sin ese archivo la frase se lee entera. -->
+      <section class="manifiesto">
+        <p class="manifiesto-frase">
+          Recetas que <em>cuentan historias</em> del fogón a tu mesa
+        </p>
+      </section>
+
+      <section class="cifras">
+        <div class="container">
+          <ul class="cifras-rejilla revelar">
+            <li class="cifra">
+              <span class="cifra-valor">10</span>
+              <span class="cifra-etiqueta">platos en la carta</span>
+            </li>
+            <li class="cifra">
+              <span class="cifra-valor">Mar—Dom</span>
+              <span class="cifra-etiqueta">servimos de 11:00 a 20:00</span>
+            </li>
+            <li class="cifra">
+              <span class="cifra-valor">Providencia</span>
+              <span class="cifra-etiqueta">Av. Providencia 1234, Santiago</span>
+            </li>
+            <li class="cifra">
+              <span class="cifra-valor">100%</span>
+              <span class="cifra-etiqueta">cocina casera, sin atajos</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- <site-footer></site-footer> -->
+    <div id="react-footer-root"></div>
+
+    <!-- El catalogo va antes de app.js: ese archivo arma el
+         scroll-reveal al ejecutarse y necesita las tarjetas ya en el DOM. -->
+    <script type="module" src="/src/js/tienda.js"></script>
+    <script type="module" src="/src/js/app.js"></script>
+
+    <script type="module" src="/src/js/main-navbar.jsx"></script>
+    <script type="module" src="/src/js/main-footer.jsx"></script>
+
+    <script type="module" src="/src/js/supabase.js"></script>
+    <script type="module" src="/src/js/registro.js"></script>
+    <script type="module" src="/src/js/login.js"></script>
+    <script type="module" src="/src/js/animaciones.js"></script>
+    <script type="module" src="/src/js/auth-ui.js"></script>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administrador - Mantenedor de Productos | Sabores de Chile</title>
+    <!-- Estilos compartidos y de admin -->
+    <link rel="stylesheet" href="/src/css/home-styles.css" />
+    <link rel="stylesheet" href="/src/css/admin-productos-styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <p class="logo">Sabores de <span class="logo-em"> Chile</span></p>
+        <button
+          type="button"
+          class="nav-toggle"
+          id="navToggleAdmin"
+          aria-expanded="false"
+          aria-controls="navAdmin"
+          aria-label="Abrir menú"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="square"
+            aria-hidden="true"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+        <nav class="main-nav" id="navAdmin">
+          <ul>
+            <li><a href="/">Ir a Tienda</a></li>
+            <li>
+              <a href="/src/pages/admin-productos.html" class="is-active"
+                >Mantenedor Productos</a
+              >
+            </li>
+            <li>
+              <button type="button" class="auth-salir" id="authSalir">
+                Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="admin-container">
+      <h1 class="admin-title">
+        Panel de Administración — Gestión de Productos 🍲
+      </h1>
+
+      <div class="admin-grid">
+        <!-- FORMULARIO DE PRODUCTO -->
+        <section class="form-card">
+          <h2 id="form-title">Agregar Nuevo Producto</h2>
+
+          <form id="form-producto" novalidate method="post">
+            <input type="hidden" id="prod-id" />
+
+            <div class="form-group">
+              <label for="prod-codigo">Código del Producto *</label>
+              <input
+                type="text"
+                id="prod-codigo"
+                placeholder="Ej: EMP-001"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="prod-nombre">Nombre *</label>
+              <input
+                type="text"
+                id="prod-nombre"
+                placeholder="Ej: Empanada de Pino"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="prod-categoria">Categoría *</label>
+              <select id="prod-categoria" required>
+                <option value="">-- Seleccionar --</option>
+                <option value="Platos Típicos">Platos Típicos</option>
+                <option value="Empanadas">Empanadas</option>
+                <option value="Postres">Postres</option>
+                <option value="Bebidas">Bebidas</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prod-precio">Precio ($) *</label>
+                <input
+                  type="number"
+                  id="prod-precio"
+                  min="0"
+                  placeholder="Ej: 3500"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="prod-stock">Stock *</label>
+                <input
+                  type="number"
+                  id="prod-stock"
+                  min="0"
+                  placeholder="Ej: 20"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prod-stock-critico">Stock Crítico</label>
+                <input
+                  type="number"
+                  id="prod-stock-critico"
+                  min="0"
+                  value="5"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="prod-imagen">URL de la Imagen</label>
+              <input type="url" id="prod-imagen" placeholder="https://..." />
+            </div>
+
+            <div class="form-group">
+              <label for="prod-descripcion">Descripción</label>
+              <textarea
+                id="prod-descripcion"
+                rows="3"
+                placeholder="Descripción detallada del plato..."
+              ></textarea>
+            </div>
+
+            <button type="submit" id="btn-guardar" class="btn btn-block">
+              Guardar Producto
+            </button>
+            <button
+              type="button"
+              id="btn-cancelar"
+              class="btn btn-block btn-cancelar is-hidden"
+            >
+              Cancelar Edición
+            </button>
+          </form>
+
+          <div id="mensaje-feedback"></div>
+        </section>
+
+        <!-- TABLA DE PRODUCTOS -->
+        <section class="list-card">
+          <h2>Inventario de Productos</h2>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Producto</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th>Stock</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-productos-body">
+                <!-- Carga dinámica vía JS/Supabase -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer admin-footer">
+      <div class="container footer-bottom">
+        <p>&copy; 2026 Sabores de Chile. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+    <script type="module" src="/src/js/admin-productos.js"></script>
+  </body>
+</html>

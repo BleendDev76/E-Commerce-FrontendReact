@@ -1,0 +1,160 @@
+/* Productos — Sabores de Chile. Reusa el sistema de home-styles.css.
+   La base del hero, la placa y las tarjetas viven allá. Acá solo va lo que
+   es propio de esta página. */
+
+/* Hero: misma banda de afiche que Blogs y Nosotros, con la raya de tintas
+   rotada (ocre primero) para que no calce igual a ninguna otra página. */
+.productos-hero::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ocre) 0 28px,
+    var(--terracota) 28px 56px,
+    var(--oliva) 56px 84px
+  );
+}
+
+.productos-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--xl);
+  align-items: center;
+}
+
+/* El hero base trae 6rem abajo y cocina otros 6rem arriba: 306px entre el
+   lead y "La cocina en movimiento". Se recorta solo en esta página. */
+.productos-hero {
+  padding-bottom: var(--xl);
+}
+
+.productos-hero-titulo {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+}
+
+.productos-hero-titulo em {
+  color: var(--terracota-txt);
+  font-style: normal;
+}
+
+.productos-hero-lead {
+  margin-top: var(--m);
+  color: var(--tinta-2);
+  max-width: 46ch;
+}
+
+/* Tarjetas contundentes (solo catálogo completo): aire interno, cuerpo a
+   1rem, categoría con más voz y precio con presencia separado por regla. */
+.productos-grid[data-catalogo="todos"] .producto-body {
+  gap: var(--s);
+}
+
+.productos-grid[data-catalogo="todos"] .producto-desc {
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.productos-grid[data-catalogo="todos"] .producto-categoria {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.productos-grid[data-catalogo="todos"] .precio {
+  font-size: 1.6rem;
+  border-top: 2px solid var(--papel);
+  padding-top: var(--s);
+  margin-top: var(--x);
+}
+
+/* Plato destacado: la primera tarjeta de la grilla completa abre a dos
+   columnas en horizontal (foto + cuerpo). Solo desktop: a una columna el
+   span crearía una pista fantasma. La home (destacados) no se toca. */
+@media (min-width: 769px) {
+  .productos-grid[data-catalogo="todos"] > .producto:first-child {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+  }
+
+  .productos-grid[data-catalogo="todos"] > .producto:first-child .producto-img {
+    border-bottom: none;
+    border-right: 2px solid var(--tinta);
+    aspect-ratio: auto;
+    min-height: 300px;
+  }
+
+  .productos-grid[data-catalogo="todos"]
+    > .producto:first-child
+    .producto-body {
+    justify-content: center;
+    padding: var(--l);
+  }
+
+  .productos-grid[data-catalogo="todos"]
+    > .producto:first-child
+    .producto-nombre {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+  }
+
+  .productos-grid[data-catalogo="todos"] > .producto:first-child .precio {
+    font-size: 1.8rem;
+  }
+}
+
+/* --- La cocina en movimiento ----------------------------------------------
+   El póster vive de fondo de la placa: tapa el flash negro mientras carga el
+   video, sirve de respaldo si el navegador no lee .webm y es lo único que se
+   ve cuando el sistema pide menos movimiento. */
+.cocina {
+  padding-block: var(--l) 0;
+}
+
+.cocina-head {
+  max-width: 48ch;
+  margin-bottom: var(--l);
+}
+
+.cocina-titulo {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+}
+
+.cocina-placa {
+  aspect-ratio: 16 / 9;
+  border: 2px solid var(--tinta);
+  box-shadow: 8px 8px 0 var(--tinta);
+  overflow: hidden;
+  background: var(--carbon) url("/assets/videos/platos-poster.webp") center /
+    cover;
+}
+
+.cocina-placa video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .productos-hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--l);
+  }
+
+  .productos-hero-placa {
+    max-width: 260px;
+  }
+}
+
+/* El video es puro movimiento: para quien pidió quietud queda el póster de
+   fondo de .cocina-placa. Va acá y no en home-styles.css porque este archivo
+   carga después y la regla del display: block de arriba ganaría por orden. */
+@media (prefers-reduced-motion: reduce) {
+  .cocina-placa video {
+    display: none;
+  }
+}

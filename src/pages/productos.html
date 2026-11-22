@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos | Sabores de Chile</title>
+    <meta
+      name="description"
+      content="El catálogo completo de Sabores de Chile: pastel de choclo, cazuela de vacuno, empanadas de pino, sopaipillas y más cocina casera chilena."
+    />
+    <link rel="stylesheet" href="/src/css/home-styles.css" />
+    <link rel="stylesheet" href="/src/css/auth-styles.css" />
+    <link rel="stylesheet" href="/src/css/animaciones.css" />
+    <link rel="stylesheet" href="/src/css/productos-styles.css" />
+  </head>
+  <body>
+    <!-- <site-navbar></site-navbar> -->
+    <div id="react-navbar-root"></div>
+
+    <main>
+      <section class="productos-hero">
+        <div class="container productos-hero-grid">
+          <div class="productos-hero-inner">
+            <p class="productos-kicker">Del fogón a tu mesa</p>
+            <h1 class="productos-hero-titulo">La carta <em>de la casa</em></h1>
+            <p class="productos-hero-lead">
+              Diez platos de siempre, cocinados como en casa. Pide por teléfono
+              o pasa a buscarlos por Providencia.
+            </p>
+          </div>
+
+          <figure class="productos-hero-placa">
+            <svg
+              viewBox="0 0 200 200"
+              role="img"
+              aria-label="Ilustración de un plato servido, con cubiertos a los lados"
+            >
+              <g
+                stroke="#2C1810"
+                stroke-width="3"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              >
+                <!-- tenedor -->
+                <path
+                  d="M34 34v40M24 34v16c0 5 4 8 10 8s10-3 10-8V34"
+                  fill="none"
+                />
+                <path d="M34 74v92" fill="none" />
+                <!-- cuchillo -->
+                <path
+                  d="M168 34c-11 2-16 12-15 26 1 12 7 19 15 20v86"
+                  fill="none"
+                />
+                <!-- plato -->
+                <circle cx="100" cy="104" r="60" fill="#FAF7F2" />
+                <circle cx="100" cy="104" r="45" fill="none" stroke-width="2" />
+                <!-- lo servido -->
+                <path
+                  d="M78 98h44c0 17-10 28-22 28s-22-11-22-28z"
+                  fill="#C0392B"
+                />
+                <path d="M76 98c0-6 11-10 24-10s24 4 24 10" fill="#D4A017" />
+                <circle cx="100" cy="82" r="6" fill="#D4A017" />
+                <ellipse
+                  cx="80"
+                  cy="124"
+                  rx="12"
+                  ry="7"
+                  fill="#6B8F3C"
+                  transform="rotate(-20 80 124)"
+                />
+                <ellipse
+                  cx="120"
+                  cy="124"
+                  rx="12"
+                  ry="7"
+                  fill="#6B8F3C"
+                  transform="rotate(20 120 124)"
+                />
+              </g>
+            </svg>
+          </figure>
+        </div>
+      </section>
+
+      <section class="cocina">
+        <div class="container">
+          <header class="cocina-head revelar">
+            <p class="productos-kicker">La cocina en movimiento</p>
+            <h2 class="cocina-titulo">Un recorrido por la cocina</h2>
+          </header>
+
+          <div class="cocina-placa">
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              poster="/assets/videos/platos-poster.webp"
+              aria-label="Recorrido animado por los nueve platos del catálogo"
+            >
+              <source src="/assets/videos/platos.webm" type="video/webm" />
+              <a href="/assets/videos/platos.webm">Descargar el video</a>
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <section class="productos">
+        <div class="container">
+          <header class="productos-head">
+            <div class="productos-head-titulo">
+              <p class="productos-kicker">Catálogo completo</p>
+              <h2 class="productos-titulo">Los diez platos</h2>
+            </div>
+            <p class="productos-lead">Todo se prepara el mismo día.</p>
+          </header>
+
+          <!-- Las tarjetas las pinta tienda.js desde Supabase. -->
+          <div class="productos-grid" data-catalogo="todos"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- <site-footer></site-footer> -->
+    <div id="react-footer-root"></div>
+
+    <!-- El catalogo va antes de app.js: ese archivo arma el
+         scroll-reveal al ejecutarse y necesita las tarjetas ya en el DOM. -->
+    <script type="module" src="/src/js/tienda.js"></script>
+    <script type="module" src="/src/js/app.js"></script>
+    <script type="module" src="/src/js/animaciones.js"></script>
+
+    <script type="module" src="/src/js/main-navbar.jsx"></script>
+    <script type="module" src="/src/js/main-footer.jsx"></script>
+
+    <script type="module" src="/src/js/supabase.js"></script>
+    <script type="module" src="/src/js/registro.js"></script>
+    <script type="module" src="/src/js/login.js"></script>
+    <script type="module" src="/src/js/auth-ui.js"></script>
+  </body>
+</html>

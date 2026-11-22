@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacto | Sabores de Chile</title>
+    <meta
+      name="description"
+      content="Escríbenos: pedidos, eventos y recetas de cocina casera chilena."
+    />
+    <link rel="stylesheet" href="/src/css/home-styles.css" />
+    <link rel="stylesheet" href="/src/css/auth-styles.css" />
+    <link rel="stylesheet" href="/src/css/animaciones.css" />
+    <link rel="stylesheet" href="/src/css/contacto-styles.css" />
+  </head>
+  <body>
+    <!-- <site-navbar></site-navbar> -->
+    <div id="react-navbar-root"></div>
+
+    <main>
+      <section class="contacto-hero">
+        <div class="container contacto-hero-grid">
+          <div class="contacto-hero-inner">
+            <p class="productos-kicker">Escríbenos a la cocina</p>
+            <h1 class="contacto-titulo">
+              Conversemos <em>del fogón a tu mesa</em>
+            </h1>
+            <p class="contacto-lead">
+              Pedidos para la semana, eventos familiares o esa receta que
+              quieres recuperar. Te respondemos a la brevedad.
+            </p>
+          </div>
+
+          <figure class="contacto-hero-placa">
+            <svg
+              viewBox="0 0 200 200"
+              role="img"
+              aria-label="Ilustración de un sobre de carta con un ají y merkén"
+            >
+              <g
+                stroke="#2C1810"
+                stroke-width="3"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              >
+                <rect x="26" y="48" width="148" height="104" fill="#FAF7F2" />
+                <path d="M26 48l74 56 74-56" fill="none" />
+                <path
+                  d="M26 152l52-42M174 152l-52-42"
+                  fill="none"
+                  stroke-width="2.5"
+                />
+                <circle cx="168" cy="42" r="20" fill="#C0392B" />
+                <path
+                  d="M168 32c-2-6 2-10 7-12 0 6-3 10-7 12z"
+                  fill="#6B8F3C"
+                />
+                <path
+                  d="M40 118c-6-8 0-16 8-14s10 12 4 18-14 2-12-6"
+                  fill="none"
+                  stroke="#8A6408"
+                  stroke-width="3"
+                />
+                <path
+                  d="M40 118c8-4 14-2 18 4"
+                  fill="none"
+                  stroke="#8A6408"
+                  stroke-width="3"
+                />
+              </g>
+            </svg>
+          </figure>
+        </div>
+      </section>
+
+      <div class="container contacto-grid">
+        <aside class="contacto-info">
+          <div class="info-card revelar">
+            <p class="productos-kicker">Nuestra cocina</p>
+            <h2>Encuéntranos y haz tu pedido</h2>
+            <p>
+              Estamos en Santiago y repartimos platos caseros de temporada,
+              hechos con ingredientes locales.
+            </p>
+            <ul class="info-lista">
+              <li>
+                <strong>Dirección</strong
+                ><span>Av. Cocina Casera 123, Ñuñoa, Santiago</span>
+              </li>
+              <li>
+                <strong>Correo</strong><span>hola@saboresdechile.cl</span>
+              </li>
+              <li><strong>Teléfono</strong><span>+56 9 1234 5678</span></li>
+            </ul>
+            <p class="horario">
+              Lunes a sábado, de 10:00 a 20:00. Domingos, solo retiros
+              programados.
+            </p>
+          </div>
+          <div class="info-card revelar">
+            <p class="productos-kicker">Antes de escribir</p>
+            <h2>¿Qué nos puedes pedir?</h2>
+            <p>
+              Menú semanal, porotos granados de temporada, empanadas para fondas
+              y cazuelas para toda la familia.
+            </p>
+          </div>
+        </aside>
+
+        <section
+          class="contacto-form-card revelar"
+          aria-labelledby="titulo-form"
+        >
+          <p class="productos-kicker">Carta a la cocina</p>
+          <h2 id="titulo-form" class="productos-titulo">
+            Formulario de contacto
+          </h2>
+          <p class="form-ayuda">
+            Todos los campos son obligatorios. Solo usamos tus datos para
+            responderte.
+          </p>
+          <form id="contactoForm" class="contacto-form" novalidate method="post">
+            <div class="form-fila">
+              <div class="campo">
+                <label for="contactoNombre">Nombre</label>
+                <input
+                  type="text"
+                  id="contactoNombre"
+                  name="nombre"
+                  maxlength="50"
+                  autocomplete="name"
+                  aria-describedby="contactoNombreError"
+                  required
+                />
+                <small
+                  id="contactoNombreError"
+                  class="error-message"
+                  aria-live="polite"
+                ></small>
+              </div>
+              <div class="campo">
+                <label for="correo">Correo</label>
+                <input
+                  type="email"
+                  id="correo"
+                  name="correo"
+                  maxlength="100"
+                  placeholder="ejemplo@gmail.com"
+                  autocomplete="email"
+                  aria-describedby="correoError"
+                  required
+                />
+                <small
+                  id="correoError"
+                  class="error-message"
+                  aria-live="polite"
+                ></small>
+              </div>
+            </div>
+            <div class="campo">
+              <label for="asunto">Asunto</label>
+              <input
+                type="text"
+                id="asunto"
+                name="asunto"
+                maxlength="100"
+                placeholder="Pedido semanal, evento, receta…"
+                aria-describedby="asuntoError"
+                required
+              />
+              <small
+                id="asuntoError"
+                class="error-message"
+                aria-live="polite"
+              ></small>
+            </div>
+            <div class="campo">
+              <label for="mensaje">Mensaje</label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="5"
+                maxlength="1000"
+                placeholder="Cuéntanos qué necesitas…"
+                aria-describedby="mensajeError"
+                required
+              ></textarea>
+              <small
+                id="mensajeError"
+                class="error-message"
+                aria-live="polite"
+              ></small>
+            </div>
+            <button type="submit" class="btn">Enviar mensaje</button>
+            <p id="contactoMessage" class="form-message" aria-live="polite"></p>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <!-- <site-footer></site-footer> -->
+    <div id="react-footer-root"></div>
+
+    <script type="module" src="/src/js/app.js"></script>
+
+    <script type="module" src="/src/js/main-navbar.jsx"></script>
+    <script type="module" src="/src/js/main-footer.jsx"></script>
+
+    <script type="module" src="/src/js/contacto.js"></script>
+    <script type="module" src="/src/js/supabase.js"></script>
+    <script type="module" src="/src/js/registro.js"></script>
+    <script type="module" src="/src/js/login.js"></script>
+    <script type="module" src="/src/js/animaciones.js"></script>
+    <script type="module" src="/src/js/auth-ui.js"></script>
+  </body>
+</html>
