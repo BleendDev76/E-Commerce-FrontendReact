@@ -1,15 +1,21 @@
-import { supabase } from "./supabase.js";
+import { listarProductos } from "./services/productoService.js";
 import { escaparHTML as esc, precioCLP } from "./validaciones.js";
 import { agregar, pintar } from "./carrito.js";
 
-// Plantilla de cada producto
-const PLANTILLA_PRODUCTO = (p) => `
+// Plantilla de cada producto renderizada desde el DTO del Backend
+const PLANTILLA_PRODUCTO = (p) => {
+  const imagen = p.imagenUrl || p.imagen_url || "";
+  const categoriaNombre =
+    p.categoria?.nombre || p.categoria || "Plato típico";
+  const descripcion = p.descripcion || "";
+
+  return `
   <article class="producto revelar" data-producto-id="${esc(p.id)}">
     <figure class="producto-img">
       ${
-        p.imagen_url
+        imagen
           ? `<img
-              src="${esc(p.imagen_url)}"
+              src="${esc(imagen)}"
               alt="${esc(p.nombre)}"
               width="800"
               height="600"
@@ -20,9 +26,9 @@ const PLANTILLA_PRODUCTO = (p) => `
     </figure>
 
     <div class="producto-body">
-      <p class="producto-categoria">${esc(p.categoria)}</p>
+      <p class="producto-categoria">${esc(categoriaNombre)}</p>
       <h3 class="producto-nombre">${esc(p.nombre)}</h3>
-      <p class="producto-desc">${esc(p.descripcion)}</p>
+      <p class="producto-desc">${esc(descripcion)}</p>
       <p class="precio">${precioCLP(p.precio)}</p>
 
       <button
@@ -38,17 +44,39 @@ const PLANTILLA_PRODUCTO = (p) => `
     </div>
   </article>
 `;
+};
 
 const contenedores = document.querySelectorAll("[data-catalogo]");
 
 if (contenedores.length) {
-  const { data: productos, error } = await supabase
-    .from("productos")
-    .select("id, nombre, descripcion, precio, categoria, imagen_url, destacado")
-    .order("id");
+  try {
+    const productos = await listarProductos();
 
-  if (error) {
-    console.error("No se pudo cargar el catálogo:", error.message);
+    if (!productos || !productos.length) {
+      contenedores.forEach((contenedor) => {
+        contenedor.innerHTML = `
+          <p class="productos-lead">
+            No hay platos disponibles en este momento.
+          </p>
+        `;
+      });
+    } else {
+      contenedores.forEach((contenedor) => {
+        const lista =
+          contenedor.dataset.catalogo === "destacados"
+            ? productos.filter((p) => p.destacado)
+            : productos;
+
+        if (!lista.length && contenedor.dataset.catalogo === "destacados") {
+          // Si no hay ninguno marcado explícitamente como destacado, mostramos los primeros 3
+          contenedor.innerHTML = productos.slice(0, 3).map(PLANTILLA_PRODUCTO).join("");
+        } else {
+          contenedor.innerHTML = lista.map(PLANTILLA_PRODUCTO).join("");
+        }
+      });
+    }
+  } catch (error) {
+    console.error("No se pudo cargar el catálogo desde el backend:", error.message);
 
     contenedores.forEach((contenedor) => {
       contenedor.innerHTML = `
@@ -57,18 +85,9 @@ if (contenedores.length) {
         </p>
       `;
     });
-  } else {
-    contenedores.forEach((contenedor) => {
-      const lista =
-        contenedor.dataset.catalogo === "destacados"
-          ? productos.filter((p) => p.destacado)
-          : productos;
-
-      contenedor.innerHTML = lista.map(PLANTILLA_PRODUCTO).join("");
-    });
+  } finally {
+    document.dispatchEvent(new Event("catalogo-listo"));
   }
-
-  document.dispatchEvent(new Event("catalogo-listo"));
 }
 
 // El botón confirma el alta un instante antes de volver a su estado normal.
