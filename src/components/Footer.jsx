@@ -145,6 +145,10 @@ export function Footer() {
           &copy; {new Date().getFullYear()} Sabores de Chile. Todos los derechos
           reservados.
         </p>
+        <nav className="footer-legal" aria-label="Legal">
+          <a href="/src/pages/terminos.html">Términos y condiciones</a>
+          <a href="/src/pages/privacidad.html">Política de privacidad</a>
+        </nav>
         <details className="footer-creditos">
           <summary>Créditos de las fotografías</summary>
           <ul>

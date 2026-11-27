@@ -1103,6 +1103,21 @@ html {
   color: var(--papel);
 }
 
+/* Enlaces legales: van en el pie, con tap target completo. */
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 var(--m);
+  margin-top: var(--s);
+}
+
+.footer-legal a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
 /* Créditos de las fotografías (Wikimedia Commons, CC BY-SA / CC BY / CC0).
    Van plegados: la atribución tiene que viajar con las fotos, pero no tiene
    por qué cargar el pie a la vista. */

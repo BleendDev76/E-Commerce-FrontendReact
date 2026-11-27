@@ -21,6 +21,9 @@ if (form) {
   const folio = document.getElementById("pedidoFolio");
   const resumenFinal = document.getElementById("pedidoResumenFinal");
   const notaCuenta = document.getElementById("checkoutNota");
+  const anuncio = document.getElementById("checkoutErrorLive");
+  const terminos = document.getElementById("pedidoTerminos");
+  const terminosError = document.getElementById("pedidoTerminosError");
 
   const campos = {
     nombre: {
@@ -74,15 +77,38 @@ if (form) {
     cfg.error.textContent = error;
     cfg.input.setAttribute("aria-invalid", error ? "true" : "false");
 
+    // La región viva es una sola: el último error validado es el que se anuncia.
+    if (error && anuncio) anuncio.textContent = error;
+
     return !error;
+  }
+
+  // Mientras se escribe solo se retira el aviso: marcar el error en la primera
+  // letra regaña antes de que el usuario termine.
+  function limpiarError(cfg) {
+    if (!cfg.error.textContent) return;
+
+    cfg.error.textContent = "";
+    cfg.input.setAttribute("aria-invalid", "false");
   }
 
   Object.values(campos).forEach((cfg) => {
     const evento = cfg.input.tagName === "SELECT" ? "change" : "input";
 
-    cfg.input.addEventListener(evento, () => validarCampo(cfg));
+    cfg.input.addEventListener(evento, () => limpiarError(cfg));
     cfg.input.addEventListener("blur", () => validarCampo(cfg));
   });
+
+  // La casilla no es un campo de texto: se valida aparte y al marcarla se
+  // retira el aviso.
+  if (terminos) {
+    terminos.addEventListener("change", () => {
+      if (!terminos.checked) return;
+
+      terminosError.textContent = "";
+      terminos.removeAttribute("aria-invalid");
+    });
+  }
 
   // El carrito vacío no tiene nada que confirmar.
   function avisarCarritoVacio() {
@@ -103,6 +129,8 @@ if (form) {
       cfg.error.textContent = "";
       cfg.input.setAttribute("aria-invalid", "false");
     });
+
+    if (terminosError) terminosError.textContent = "";
   }
 
   function guardarPedido(pedido) {
@@ -162,6 +190,16 @@ if (form) {
 
     if (carrito.length === 0) {
       avisarCarritoVacio();
+      return;
+    }
+
+    if (terminos && !terminos.checked) {
+      terminosError.textContent =
+        "Debes aceptar los términos y la política de privacidad.";
+      terminos.setAttribute("aria-invalid", "true");
+      if (anuncio) anuncio.textContent = terminosError.textContent;
+
+      terminos.focus();
       return;
     }
 

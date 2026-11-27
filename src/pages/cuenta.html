@@ -190,6 +190,45 @@
 
               <p id="claveMessage" class="form-message" aria-live="polite"></p>
             </form>
+
+            <form class="pedido-form" id="cuentaBorrar" novalidate hidden method="post">
+              <h2 class="pedido-form-titulo">Eliminar cuenta</h2>
+
+              <p class="pedido-nota">
+                Se borra tu cuenta y tus datos de entrega. No se puede deshacer.
+                Si tienes boletas emitidas, la cuenta no se puede eliminar:
+                escríbenos para resolverlo.
+              </p>
+
+              <div class="form-group">
+                <label for="cuentaBorrarEmail"
+                  >Escribe tu correo para confirmar</label
+                >
+                <input
+                  type="email"
+                  id="cuentaBorrarEmail"
+                  name="email"
+                  maxlength="100"
+                  placeholder="ejemplo@gmail.com"
+                  autocomplete="off"
+                  aria-describedby="cuentaBorrarEmailAyuda cuentaBorrarEmailError"
+                />
+                <small id="cuentaBorrarEmailAyuda" class="form-ayuda"
+                  >Tiene que ser el mismo correo de la cuenta.</small
+                >
+                <small id="cuentaBorrarEmailError" class="error-message"></small>
+              </div>
+
+              <button type="submit" class="btn" id="cuentaBorrarBoton">
+                Eliminar mi cuenta
+              </button>
+
+              <p
+                id="cuentaBorrarMessage"
+                class="form-message"
+                aria-live="polite"
+              ></p>
+            </form>
           </div>
         </div>
       </section>

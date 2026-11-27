@@ -48,6 +48,40 @@
   cursor: not-allowed;
 }
 
+/* Casilla de aceptación: checkbox nativo con el color de marca. El label es
+   el objetivo táctil de 44px, no la caja. */
+.form-group--check {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 0.65rem;
+}
+
+.form-group--check input[type="checkbox"] {
+  width: 1.4rem;
+  height: 1.4rem;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  accent-color: var(--terracota);
+  cursor: pointer;
+}
+
+.form-group--check label {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.form-group--check .error-message {
+  grid-column: 1 / -1;
+}
+
 .form-group .error-message {
   color: var(--terracota-2);
   font-size: 0.85rem;
@@ -75,6 +109,19 @@
 
 .form-message:empty {
   display: none;
+}
+
+/* Visible para lectores de pantalla, fuera del flujo visual. */
+.aviso-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Boton secundario: el mismo canto duro que .btn, sin relleno terracota */
@@ -289,6 +336,17 @@
 
 .auth-modal::backdrop {
   background: rgba(28, 23, 20, 0.72);
+}
+
+/* Sin esto el scroll sobre el fondo o dentro del diálogo mueve la página de
+   atrás. `overflow: hidden` en el backdrop evita el scroll encadenado. */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
 }
 
 .auth-modal-cabecera {
@@ -903,6 +961,25 @@ body:has(.cart-modal[open]) {
   gap: var(--s);
 }
 
+/* --- Páginas legales ------------------------------------------------------- */
+/* privacidad.html y terminos.html: una sola columna de lectura. */
+
+.legal-texto {
+  max-width: 72ch;
+  display: grid;
+  gap: var(--m);
+}
+
+.legal-texto h2 {
+  font-size: 1.35rem;
+  line-height: 1.2;
+  margin-top: var(--m);
+}
+
+.legal-texto > p:last-child {
+  margin-top: var(--m);
+}
+
 .pedido-acciones .cart-btn,
 .pedido-form > .btn,
 .pedido-form > .cart-btn {
@@ -953,6 +1030,13 @@ body:has(.cart-modal[open]) {
 #cuentaSinSesion {
   grid-column: 1 / -1;
   max-width: 44rem;
+}
+
+/* La zona de borrado va debajo de las dos tarjetas y con borde de aviso. */
+#cuentaBorrar {
+  grid-column: 1 / -1;
+  max-width: 44rem;
+  border-color: var(--terracota);
 }
 
 @media (max-width: 900px) {

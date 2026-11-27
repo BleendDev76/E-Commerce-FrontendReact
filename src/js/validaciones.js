@@ -16,18 +16,17 @@ export function errorCorreo(v) {
   return "";
 }
 
-/** Un RUT válido con módulo 11: "11111111-1", "76.086.428-5", "12345678K".
-    Devuelve "" o el mensaje de error. */
+/** Un RUT válido con módulo 11 y guion obligatorio: "11111111-1",
+    "76086428-5", "12345678-K". Devuelve "" o el mensaje de error. */
 export function errorRut(valor) {
-  const limpio = String(valor ?? "")
-    .replace(/[.\s-]/g, "")
-    .toUpperCase();
+  const texto = String(valor ?? "").trim();
 
-  if (!limpio) return "El RUT es obligatorio.";
+  if (!texto) return "El RUT es obligatorio.";
 
-  if (!/^\d{7,8}[\dK]$/.test(limpio))
-    return "El RUT debe tener 7 u 8 dígitos y un dígito verificador.";
+  if (!/^\d{7,8}-[\dkK]$/.test(texto))
+    return "Escribe el RUT con guion: 11111111-1.";
 
+  const limpio = texto.replace("-", "").toUpperCase();
   const cuerpo = limpio.slice(0, -1);
   const dv = limpio.slice(-1);
   let suma = 0;

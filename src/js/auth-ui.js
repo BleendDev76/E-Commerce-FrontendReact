@@ -54,11 +54,19 @@ document.addEventListener("click", (evento) => {
     return;
   }
 
-  // Clic en el fondo del modal: el evento cae sobre el propio <dialog>.
+  // Clic fuera del modal: el propio <dialog> también es target de su padding,
+  // así que se comparan las coordenadas con su caja, no event.target.
   if (
     evento.target instanceof HTMLDialogElement &&
     evento.target.classList.contains("auth-modal")
   ) {
-    evento.target.close();
+    const caja = evento.target.getBoundingClientRect();
+    const dentro =
+      evento.clientX >= caja.left &&
+      evento.clientX <= caja.right &&
+      evento.clientY >= caja.top &&
+      evento.clientY <= caja.bottom;
+
+    if (!dentro) evento.target.close();
   }
 });

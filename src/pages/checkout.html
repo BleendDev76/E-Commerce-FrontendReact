@@ -90,13 +90,10 @@
                 placeholder="Tu nombre"
                 maxlength="50"
                 autocomplete="name"
+                aria-describedby="pedidoNombreError"
                 required
               />
-              <small
-                id="pedidoNombreError"
-                class="error-message"
-                aria-live="polite"
-              ></small>
+              <small id="pedidoNombreError" class="error-message"></small>
             </div>
 
             <div class="form-group">
@@ -108,13 +105,13 @@
                 placeholder="11111111-1"
                 maxlength="12"
                 autocomplete="off"
+                aria-describedby="pedidoRutAyuda pedidoRutError"
                 required
               />
-              <small
-                id="pedidoRutError"
-                class="error-message"
-                aria-live="polite"
-              ></small>
+              <small id="pedidoRutAyuda" class="form-ayuda"
+                >Formato obligatorio: 11111111-1.</small
+              >
+              <small id="pedidoRutError" class="error-message"></small>
             </div>
 
             <div class="form-group">
@@ -126,37 +123,42 @@
                 placeholder="ejemplo@gmail.com"
                 maxlength="100"
                 autocomplete="email"
+                aria-describedby="pedidoCorreoAyuda pedidoCorreoError"
                 required
               />
-              <small
-                id="pedidoCorreoError"
-                class="error-message"
-                aria-live="polite"
-              ></small>
+              <small id="pedidoCorreoAyuda" class="form-ayuda"
+                >Solo @duoc.cl, @duocuc.cl, @profesor.duoc.cl o @gmail.com.</small
+              >
+              <small id="pedidoCorreoError" class="error-message"></small>
             </div>
 
             <div class="form-group">
               <label for="pedidoRegion">Región</label>
-              <select id="pedidoRegion" name="region" required>
+              <select
+                id="pedidoRegion"
+                name="region"
+                autocomplete="address-level1"
+                aria-describedby="pedidoRegionError"
+                required
+              >
                 <option value="">Selecciona una región</option>
               </select>
-              <small
-                id="pedidoRegionError"
-                class="error-message"
-                aria-live="polite"
-              ></small>
+              <small id="pedidoRegionError" class="error-message"></small>
             </div>
 
             <div class="form-group">
               <label for="pedidoComuna">Comuna</label>
-              <select id="pedidoComuna" name="comuna" disabled required>
+              <select
+                id="pedidoComuna"
+                name="comuna"
+                autocomplete="address-level2"
+                aria-describedby="pedidoComunaError"
+                disabled
+                required
+              >
                 <option value="">Selecciona una comuna</option>
               </select>
-              <small
-                id="pedidoComunaError"
-                class="error-message"
-                aria-live="polite"
-              ></small>
+              <small id="pedidoComunaError" class="error-message"></small>
             </div>
 
             <div class="form-group">
@@ -168,13 +170,37 @@
                 placeholder="Calle y número"
                 maxlength="300"
                 autocomplete="street-address"
+                aria-describedby="pedidoDireccionError"
                 required
               />
-              <small
-                id="pedidoDireccionError"
-                class="error-message"
-                aria-live="polite"
-              ></small>
+              <small id="pedidoDireccionError" class="error-message"></small>
+            </div>
+
+            <div class="form-group form-group--check">
+              <input
+                type="checkbox"
+                id="pedidoTerminos"
+                name="terminos"
+                aria-describedby="pedidoTerminosError"
+                required
+              />
+              <label for="pedidoTerminos">
+                Acepto los
+                <a
+                  href="/src/pages/terminos.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >términos y condiciones</a
+                >
+                y la
+                <a
+                  href="/src/pages/privacidad.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >política de privacidad</a
+                >.
+              </label>
+              <small id="pedidoTerminosError" class="error-message"></small>
             </div>
 
             <button type="submit" class="btn" id="checkoutButton">
@@ -208,6 +234,9 @@
         </div>
       </section>
     </main>
+
+    <!-- Una sola región viva: anuncia el error del campo que perdió el foco. -->
+    <p id="checkoutErrorLive" class="aviso-oculto" aria-live="polite"></p>
 
     <!-- <site-footer></site-footer> -->
     <div id="react-footer-root"></div>

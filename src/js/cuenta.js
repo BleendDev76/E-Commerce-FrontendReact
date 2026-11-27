@@ -10,6 +10,7 @@ import { poblarRegiones, regiones } from "./regiones.js";
 
 const formDatos = document.getElementById("cuentaForm");
 const formClave = document.getElementById("claveForm");
+const formBorrar = document.getElementById("cuentaBorrar");
 const sinSesion = document.getElementById("cuentaSinSesion");
 
 if (formDatos && formClave && sinSesion) {
@@ -54,6 +55,7 @@ if (formDatos && formClave && sinSesion) {
   const mensajeClave = document.getElementById("claveMessage");
 
   let usuarioId = null;
+  let correoCuenta = "";
 
   poblarRegiones(campos.region.input, campos.comuna.input);
 
@@ -85,13 +87,16 @@ if (formDatos && formClave && sinSesion) {
     sinSesion.hidden = activa;
     formDatos.hidden = !activa;
     formClave.hidden = !activa;
+    if (formBorrar) formBorrar.hidden = !activa;
 
     if (!activa) {
       usuarioId = null;
+      correoCuenta = "";
       return;
     }
 
     usuarioId = sesion.user.id;
+    correoCuenta = (sesion.user.email || "").toLowerCase();
 
     const datos = sesion.user.user_metadata || {};
 
@@ -211,6 +216,69 @@ if (formDatos && formClave && sinSesion) {
     formClave.reset();
     avisar(mensajeClave, "Contraseña cambiada.", "exito");
   });
+
+  // --- Eliminar la cuenta ---------------------------------------------------
+  // La función de Postgres borra solo la fila de auth.uid(), así que el correo
+  // escrito acá es lo único que confirma que quien pulsa es el dueño.
+  if (formBorrar) {
+    const borrarEmail = document.getElementById("cuentaBorrarEmail");
+    const errorBorrarEmail = document.getElementById("cuentaBorrarEmailError");
+    const botonBorrar = document.getElementById("cuentaBorrarBoton");
+    const mensajeBorrar = document.getElementById("cuentaBorrarMessage");
+
+    formBorrar.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+
+      if (!usuarioId) return;
+
+      const escrito = borrarEmail.value.trim().toLowerCase();
+
+      errorBorrarEmail.textContent = "";
+      borrarEmail.setAttribute("aria-invalid", "false");
+      avisar(mensajeBorrar, "", "");
+
+      if (escrito !== correoCuenta) {
+        errorBorrarEmail.textContent = escrito
+          ? "Ese no es el correo de tu cuenta."
+          : "Escribe tu correo para confirmar.";
+        borrarEmail.setAttribute("aria-invalid", "true");
+        borrarEmail.focus();
+        return;
+      }
+
+      botonBorrar.disabled = true;
+      avisar(mensajeBorrar, "Eliminando la cuenta…", "");
+
+      const { error } = await supabase.rpc("eliminar_mi_cuenta");
+
+      if (error) {
+        botonBorrar.disabled = false;
+        console.error("No se pudo eliminar la cuenta:", error);
+
+        avisar(
+          mensajeBorrar,
+          error.code === "23503"
+            ? "La cuenta tiene boletas emitidas. Escríbenos para eliminarla."
+            : "No se pudo eliminar la cuenta. Inténtalo de nuevo.",
+          "error",
+        );
+        return;
+      }
+
+      avisar(
+        mensajeBorrar,
+        "Cuenta eliminada. Te llevamos a la tienda…",
+        "exito",
+      );
+      borrarEmail.value = "";
+
+      // La cuenta ya no existe: la sesión guardada no sirve para nada.
+      setTimeout(async () => {
+        await supabase.auth.signOut();
+        window.location.href = "/index.html";
+      }, 1500);
+    });
+  }
 
   supabase.auth.getSession().then(({ data }) => pintarCuenta(data.session));
   supabase.auth.onAuthStateChange((_evento, sesion) => pintarCuenta(sesion));

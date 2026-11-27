@@ -1,6 +1,6 @@
 import { supabase } from "./supabase.js";
 import { poblarRegiones, regiones } from "./regiones.js";
-import { errorCorreo } from "./validaciones.js";
+import { errorCorreo, errorRut } from "./validaciones.js";
 
 // El formulario de registro de cada página es este mismo, con o sin navbar.
 function prepararRegiones() {
@@ -28,6 +28,10 @@ document.addEventListener(
 
 console.log(" Script registro.js cargado correctamente");
 
+// Correo del alta que quedó esperando confirmación. El formulario se limpia
+// tras el alta, así que el reenvío no puede leerlo de vuelta del input.
+let correoPendiente = "";
+
 // Los formularios del navbar los monta React después de este módulo, así que
 // se escucha en el documento y se filtra por id en vez de buscarlo al cargar.
 document.addEventListener("submit", async function (event) {
@@ -47,6 +51,7 @@ document.addEventListener("submit", async function (event) {
   const region = document.getElementById("region").value;
   const comuna = document.getElementById("comuna").value;
   const direccion = document.getElementById("direccion").value.trim();
+  const terminos = document.getElementById("aceptaTerminos");
 
   const rutError = document.getElementById("rutError");
   const nombreError = document.getElementById("nombreError");
@@ -56,6 +61,7 @@ document.addEventListener("submit", async function (event) {
   const regionError = document.getElementById("regionError");
   const comunaError = document.getElementById("comunaError");
   const direccionError = document.getElementById("direccionError");
+  const terminosError = document.getElementById("terminosError");
   const registroMessage = document.getElementById("registroMessage");
   const registroButton = document.getElementById("registroButton");
 
@@ -68,16 +74,14 @@ document.addEventListener("submit", async function (event) {
   if (regionError) regionError.textContent = "";
   if (comunaError) comunaError.textContent = "";
   if (direccionError) direccionError.textContent = "";
+  if (terminosError) terminosError.textContent = "";
   if (registroMessage) registroMessage.textContent = "";
 
   let valido = true;
 
-  if (rut === "") {
-    if (rutError) rutError.textContent = "El RUT es obligatorio.";
-    valido = false;
-  } else if (!/^\d{7,8}-[\dkK]$/.test(rut)) {
-    if (rutError)
-      rutError.textContent = "El RUT debe tener el formato 11111111-1.";
+  const msgRut = errorRut(rut);
+  if (msgRut) {
+    if (rutError) rutError.textContent = msgRut;
     valido = false;
   }
 
@@ -127,8 +131,25 @@ document.addEventListener("submit", async function (event) {
     valido = false;
   }
 
+  if (terminos && !terminos.checked) {
+    if (terminosError)
+      terminosError.textContent =
+        "Debes aceptar los términos y la política de privacidad.";
+    terminos.setAttribute("aria-invalid", "true");
+    valido = false;
+  } else if (terminos) {
+    terminos.removeAttribute("aria-invalid");
+  }
+
   if (!valido) {
     console.warn(" Formulario inválido, revisa los campos en rojo");
+
+    // El foco va al primer campo con error, casilla de términos incluida.
+    const primerError = registroForm.querySelector(
+      ".error-message:not(:empty)",
+    );
+
+    primerError?.parentElement?.querySelector("input, select")?.focus();
     return;
   }
 
@@ -145,7 +166,9 @@ document.addEventListener("submit", async function (event) {
       email: email,
       password: password,
       options: {
-        emailRedirectTo: `${window.location.origin}/src/pages/login.html`,
+        // El enlace de confirmación deja la sesión creada en el home: el
+        // usuario entra ya logueado, sin pasar por el formulario de login.
+        emailRedirectTo: `${window.location.origin}/index.html`,
         data: {
           rut: rut,
           nombre: nombre,
@@ -183,12 +206,23 @@ document.addEventListener("submit", async function (event) {
 
     if (registroMessage) {
       registroMessage.textContent = conSesion
-        ? "Cuenta creada. Sesión iniciada como " + email + "."
+        ? "Cuenta creada. Entrando a la tienda…"
         : "Cuenta creada correctamente. Revisa tu correo para confirmarla.";
     }
 
+    // Con la sesión ya creada no hay nada que esperar: el alta deja al usuario
+    // dentro y se va al home, no a una pantalla intermedia con un mensaje.
+    if (conSesion) {
+      registroForm.closest("dialog")?.close();
+      setTimeout(() => {
+        window.location.href = "/index.html";
+      }, 700);
+      return;
+    }
+
     registroForm.reset();
-    if (conSesion) registroForm.closest("dialog")?.close();
+    correoPendiente = email;
+    if (terminos) terminos.removeAttribute("aria-invalid");
   } catch (err) {
     console.error("Error inesperado en la ejecución del submit:", err);
     if (registroMessage) {
@@ -200,5 +234,67 @@ document.addEventListener("submit", async function (event) {
       registroButton.disabled = false;
       registroButton.textContent = "Crear cuenta";
     }
+  }
+});
+
+// --- Reenviar el correo de confirmación -------------------------------------
+// El botón vive en el mismo formulario que el submit (página y modal), así que
+// también se escucha en el documento.
+document.addEventListener("click", async function (event) {
+  const boton = event.target?.closest?.("#reenviarCorreo");
+  if (!boton) return;
+
+  const registroMessage = document.getElementById("registroMessage");
+  const emailInput = document.getElementById("email");
+
+  // Con sesión, el correo a verificar es el de la cuenta. Sin sesión (la
+  // confirmación está activa y el alta no la crea), el escrito en el formulario.
+  const { data } = await supabase.auth.getSession();
+  const email = (
+    data?.session?.user?.email ||
+    correoPendiente ||
+    emailInput?.value ||
+    ""
+  ).trim();
+
+  if (!email) {
+    if (registroMessage) {
+      registroMessage.className = "form-message error";
+      registroMessage.textContent =
+        "Escribe tu correo para reenviar la confirmación.";
+    }
+    emailInput?.focus();
+    return;
+  }
+
+  boton.disabled = true;
+  if (registroMessage) {
+    registroMessage.className = "form-message";
+    registroMessage.textContent = "Enviando el correo de confirmación…";
+  }
+
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email,
+    options: {
+      emailRedirectTo: `${window.location.origin}/index.html`,
+    },
+  });
+
+  boton.disabled = false;
+
+  if (error) {
+    console.error("No se pudo reenviar el correo:", error);
+    if (registroMessage) {
+      registroMessage.className = "form-message error";
+      registroMessage.textContent =
+        "No se pudo reenviar el correo. Inténtalo de nuevo en unos minutos.";
+    }
+    return;
+  }
+
+  if (registroMessage) {
+    registroMessage.className = "form-message exito";
+    registroMessage.textContent = `Te enviamos otro correo de confirmación a ${email}. Revisa también la carpeta de spam.`;
   }
 });

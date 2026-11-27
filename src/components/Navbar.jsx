@@ -378,6 +378,10 @@ export function Navbar() {
             ></p>
 
             <p className="register-link">
+              <a href="/src/pages/recuperar.html">¿Olvidaste tu contraseña?</a>
+            </p>
+
+            <p className="register-link">
               ¿No tienes una cuenta?{" "}
               <a
                 href="/src/pages/registros.html"
@@ -419,9 +423,13 @@ export function Navbar() {
                 id="rut"
                 name="rut"
                 placeholder="11111111-1"
-                maxLength={10}
+                maxLength={12}
+                aria-describedby="rutAyuda rutError"
                 required
               />
+              <small id="rutAyuda" className="form-ayuda">
+                Formato obligatorio: 11111111-1.
+              </small>
               <small
                 id="rutError"
                 className="error-message"
@@ -473,8 +481,12 @@ export function Navbar() {
                 maxLength={100}
                 placeholder="ejemplo@gmail.com"
                 autoComplete="email"
+                aria-describedby="emailAyuda emailError"
                 required
               />
+              <small id="emailAyuda" className="form-ayuda">
+                Solo @duoc.cl, @duocuc.cl, @profesor.duoc.cl o @gmail.com.
+              </small>
               <small
                 id="emailError"
                 className="error-message"
@@ -490,8 +502,12 @@ export function Navbar() {
                 name="password"
                 placeholder="Mínimo 6 caracteres"
                 autoComplete="new-password"
+                aria-describedby="passwordAyuda passwordError"
                 required
               />
+              <small id="passwordAyuda" className="form-ayuda">
+                Mínimo 6 caracteres.
+              </small>
               <small
                 id="passwordError"
                 className="error-message"
@@ -506,7 +522,11 @@ export function Navbar() {
                 id="fechaNacimiento"
                 name="fechaNacimiento"
                 autoComplete="bday"
+                aria-describedby="fechaNacimientoAyuda fechaNacimientoError"
               />
+              <small id="fechaNacimientoAyuda" className="form-ayuda">
+                Opcional.
+              </small>
               <small
                 id="fechaNacimientoError"
                 className="error-message"
@@ -516,7 +536,12 @@ export function Navbar() {
 
             <div className="form-group">
               <label htmlFor="region">Región</label>
-              <select id="region" name="region" required>
+              <select
+                id="region"
+                name="region"
+                autoComplete="address-level1"
+                required
+              >
                 <option value="">Selecciona una región</option>
               </select>
               <small
@@ -528,7 +553,13 @@ export function Navbar() {
 
             <div className="form-group">
               <label htmlFor="comuna">Comuna</label>
-              <select id="comuna" name="comuna" disabled required>
+              <select
+                id="comuna"
+                name="comuna"
+                autoComplete="address-level2"
+                disabled
+                required
+              >
                 <option value="">Selecciona una comuna</option>
               </select>
               <small
@@ -547,13 +578,47 @@ export function Navbar() {
                 placeholder="Calle y número"
                 maxLength={300}
                 autoComplete="street-address"
+                aria-describedby="direccionAyuda direccionError"
                 required
               />
+              <small id="direccionAyuda" className="form-ayuda">
+                Calle y número, por ejemplo Av. Providencia 1234.
+              </small>
               <small
                 id="direccionError"
                 className="error-message"
                 aria-live="polite"
               ></small>
+            </div>
+
+            <div className="form-group form-group--check">
+              <input
+                type="checkbox"
+                id="aceptaTerminos"
+                name="terminos"
+                aria-describedby="terminosError"
+                required
+              />
+              <label htmlFor="aceptaTerminos">
+                Acepto los{" "}
+                <a
+                  href="/src/pages/terminos.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  términos y condiciones
+                </a>{" "}
+                y la{" "}
+                <a
+                  href="/src/pages/privacidad.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  política de privacidad
+                </a>
+                .
+              </label>
+              <small id="terminosError" className="error-message"></small>
             </div>
 
             <button type="submit" id="registroButton" className="btn">
@@ -564,6 +629,10 @@ export function Navbar() {
               className="form-message"
               aria-live="polite"
             ></p>
+
+            <button type="button" id="reenviarCorreo" className="btn-texto">
+              Reenviar correo de confirmación
+            </button>
 
             <p className="register-link">
               ¿Ya tienes una cuenta?{" "}

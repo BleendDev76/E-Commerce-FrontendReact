@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Recuperar contraseña | Sabores de Chile</title>
+    <meta
+      name="description"
+      content="Pide un enlace para restablecer la contraseña de tu cuenta de Sabores de Chile."
+    />
+
+    <link rel="stylesheet" href="/src/css/home-styles.css" />
+    <link rel="stylesheet" href="/src/css/auth-styles.css" />
+  </head>
+
+  <body>
+    <main class="auth-container">
+      <section class="auth-card">
+        <h1>Recuperar contraseña</h1>
+
+        <!-- Paso 1: pedir el enlace. -->
+        <form id="recuperarForm" method="post" novalidate>
+          <p class="auth-subtitle">
+            Escribe el correo de tu cuenta y te enviamos un enlace para crear
+            una contraseña nueva.
+          </p>
+
+          <div class="form-group">
+            <label for="recuperarEmail">Correo electrónico</label>
+            <input
+              type="email"
+              id="recuperarEmail"
+              name="email"
+              maxlength="100"
+              placeholder="ejemplo@gmail.com"
+              autocomplete="email"
+              aria-describedby="recuperarEmailAyuda recuperarEmailError"
+              required
+            />
+            <small id="recuperarEmailAyuda" class="form-ayuda"
+              >Solo @duoc.cl, @duocuc.cl, @profesor.duoc.cl o @gmail.com.</small
+            >
+            <small id="recuperarEmailError" class="error-message"></small>
+          </div>
+
+          <button type="submit" id="recuperarButton" class="btn">
+            Enviar enlace
+          </button>
+
+          <p id="recuperarMessage" class="form-message" aria-live="polite"></p>
+        </form>
+
+        <!-- Paso 2: aparece solo con la sesión de recuperación del enlace. -->
+        <form id="restablecerForm" method="post" novalidate hidden>
+          <p class="auth-subtitle">
+            Elige una contraseña nueva para tu cuenta.
+          </p>
+
+          <div class="form-group">
+            <label for="nuevaPassword">Contraseña nueva</label>
+            <input
+              type="password"
+              id="nuevaPassword"
+              name="password"
+              placeholder="Mínimo 6 caracteres"
+              autocomplete="new-password"
+              aria-describedby="nuevaPasswordError"
+              required
+            />
+            <small id="nuevaPasswordError" class="error-message"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="repetirPassword">Repite la contraseña</label>
+            <input
+              type="password"
+              id="repetirPassword"
+              name="repetir"
+              placeholder="Otra vez"
+              autocomplete="new-password"
+              aria-describedby="repetirPasswordError"
+              required
+            />
+            <small id="repetirPasswordError" class="error-message"></small>
+          </div>
+
+          <button type="submit" id="restablecerButton" class="btn">
+            Cambiar contraseña
+          </button>
+
+          <p
+            id="restablecerMessage"
+            class="form-message"
+            aria-live="polite"
+          ></p>
+        </form>
+
+        <p class="register-link">
+          <a href="/src/pages/login.html">Volver al inicio de sesión</a>
+        </p>
+
+        <a href="/" class="auth-volver">&larr; Volver a la tienda</a>
+      </section>
+    </main>
+
+    <script type="module" src="/src/js/recuperar.js"></script>
+  </body>
+</html>
