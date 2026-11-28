@@ -70,15 +70,28 @@ if (form) {
 
   poblarRegiones(campos.region.input, campos.comuna.input);
 
-  function validarCampo(cfg) {
+  // Las ayudas fijas del HTML; el error se agrega solo mientras existe.
+  Object.values(campos).forEach((cfg) => {
+    cfg.base = cfg.input.getAttribute("aria-describedby") || "";
+  });
+
+  function describir(cfg, error) {
+    const ids = [cfg.base, error ? cfg.error.id : ""].filter(Boolean).join(" ");
+
+    if (ids) cfg.input.setAttribute("aria-describedby", ids);
+    else cfg.input.removeAttribute("aria-describedby");
+  }
+
+  function validarCampo(cfg, anunciar = true) {
     const valor = cfg.input.value.trim();
     const error = cfg.validar(valor);
 
     cfg.error.textContent = error;
     cfg.input.setAttribute("aria-invalid", error ? "true" : "false");
+    describir(cfg, error);
 
-    // La región viva es una sola: el último error validado es el que se anuncia.
-    if (error && anuncio) anuncio.textContent = error;
+    // La región viva es una sola: al validar un campo se anuncia su error.
+    if (error && anunciar && anuncio) anuncio.textContent = error;
 
     return !error;
   }
@@ -90,6 +103,8 @@ if (form) {
 
     cfg.error.textContent = "";
     cfg.input.setAttribute("aria-invalid", "false");
+    describir(cfg, false);
+    if (anuncio) anuncio.textContent = "";
   }
 
   Object.values(campos).forEach((cfg) => {
@@ -107,6 +122,8 @@ if (form) {
 
       terminosError.textContent = "";
       terminos.removeAttribute("aria-invalid");
+      terminos.removeAttribute("aria-describedby");
+      if (anuncio) anuncio.textContent = "";
     });
   }
 
@@ -128,9 +145,12 @@ if (form) {
     Object.values(campos).forEach((cfg) => {
       cfg.error.textContent = "";
       cfg.input.setAttribute("aria-invalid", "false");
+      describir(cfg, false);
     });
 
     if (terminosError) terminosError.textContent = "";
+    if (terminos) terminos.removeAttribute("aria-describedby");
+    if (anuncio) anuncio.textContent = "";
   }
 
   function guardarPedido(pedido) {
@@ -176,11 +196,14 @@ if (form) {
   form.addEventListener("submit", (evento) => {
     evento.preventDefault();
 
-    const resultados = Object.values(campos).map(validarCampo);
+    const resultados = Object.values(campos).map((cfg) =>
+      validarCampo(cfg, false),
+    );
 
     if (!resultados.every(Boolean)) {
       mensaje.textContent = "Revisa los campos marcados antes de confirmar.";
       mensaje.className = "form-message error";
+      if (anuncio) anuncio.textContent = mensaje.textContent;
 
       const primero = Object.values(campos).find((cfg) => cfg.error.textContent);
 
@@ -197,6 +220,7 @@ if (form) {
       terminosError.textContent =
         "Debes aceptar los términos y la política de privacidad.";
       terminos.setAttribute("aria-invalid", "true");
+      terminos.setAttribute("aria-describedby", "pedidoTerminosError");
       if (anuncio) anuncio.textContent = terminosError.textContent;
 
       terminos.focus();

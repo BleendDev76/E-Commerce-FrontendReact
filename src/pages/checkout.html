@@ -90,7 +90,6 @@
                 placeholder="Tu nombre"
                 maxlength="50"
                 autocomplete="name"
-                aria-describedby="pedidoNombreError"
                 required
               />
               <small id="pedidoNombreError" class="error-message"></small>
@@ -105,7 +104,7 @@
                 placeholder="11111111-1"
                 maxlength="12"
                 autocomplete="off"
-                aria-describedby="pedidoRutAyuda pedidoRutError"
+                aria-describedby="pedidoRutAyuda"
                 required
               />
               <small id="pedidoRutAyuda" class="form-ayuda"
@@ -123,7 +122,7 @@
                 placeholder="ejemplo@gmail.com"
                 maxlength="100"
                 autocomplete="email"
-                aria-describedby="pedidoCorreoAyuda pedidoCorreoError"
+                aria-describedby="pedidoCorreoAyuda"
                 required
               />
               <small id="pedidoCorreoAyuda" class="form-ayuda"
@@ -138,7 +137,6 @@
                 id="pedidoRegion"
                 name="region"
                 autocomplete="address-level1"
-                aria-describedby="pedidoRegionError"
                 required
               >
                 <option value="">Selecciona una región</option>
@@ -152,7 +150,6 @@
                 id="pedidoComuna"
                 name="comuna"
                 autocomplete="address-level2"
-                aria-describedby="pedidoComunaError"
                 disabled
                 required
               >
@@ -170,7 +167,6 @@
                 placeholder="Calle y número"
                 maxlength="300"
                 autocomplete="street-address"
-                aria-describedby="pedidoDireccionError"
                 required
               />
               <small id="pedidoDireccionError" class="error-message"></small>
@@ -181,7 +177,6 @@
                 type="checkbox"
                 id="pedidoTerminos"
                 name="terminos"
-                aria-describedby="pedidoTerminosError"
                 required
               />
               <label for="pedidoTerminos">
